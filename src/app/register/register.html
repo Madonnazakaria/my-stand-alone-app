@@ -1,0 +1,70 @@
+<div class="container">
+  <h3 class="mb-3">Register</h3>
+
+  <form [formGroup]="form" (ngSubmit)="register()" novalidate>
+
+    <!-- Full Name -->
+    <div class="mb-3">
+      <label>Full Name</label>
+      <input type="text" formControlName="fullName" class="form-control"
+             [class.is-invalid]="form.get('fullName')?.invalid && form.get('fullName')?.touched"
+             [class.is-valid]="form.get('fullName')?.valid">
+      <div class="invalid-feedback">Name is required (min 5 chars)</div>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" formControlName="email" class="form-control"
+             placeholder="ex: user@gmail.com"
+             [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched"
+             [class.is-valid]="form.get('email')?.valid">
+      <div class="invalid-feedback">Enter a valid email (e.g user@example.com)</div>
+    </div>
+
+    <!-- Mobiles -->
+    <div class="mb-3" formArrayName="mobiles">
+      <label>Mobile Number</label>
+      <div *ngFor="let mobile of mobiles.controls; let i = index" class="d-flex mb-2">
+        <input type="text" [formControlName]="i" class="form-control me-2"
+               placeholder="01xxxxxxxxx"
+               [class.is-invalid]="mobile.invalid && mobile.touched"
+               [class.is-valid]="mobile.valid">
+        <button *ngIf="i > 0" class="btn btn-danger" type="button" (click)="removeMobile(i)">Remove</button>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" (click)="addMobile()">Add Another</button>
+    </div>
+
+    <!-- Password -->
+    <div class="mb-3">
+      <label>Password</label>
+      <div class="input-group">
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control"
+               [class.is-invalid]="form.get('password')?.invalid && form.get('password')?.touched"
+               [class.is-valid]="form.get('password')?.valid">
+        <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()">
+          {{ showPassword ? '🙈' : '👁' }}
+        </button>
+      </div>
+      <div class="invalid-feedback">Password min 6 chars</div>
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="mb-3">
+      <label>Confirm Password</label>
+      <div class="input-group">
+        <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" class="form-control"
+               [class.is-invalid]="(form.hasError('mismatch') || form.get('confirmPassword')?.invalid) && form.get('confirmPassword')?.touched"
+               [class.is-valid]="form.get('confirmPassword')?.valid && !form.hasError('mismatch')">
+        <button class="btn btn-outline-secondary" type="button" (click)="toggleConfirmPassword()">
+          {{ showConfirmPassword ? '🙈' : '👁' }}
+        </button>
+      </div>
+      <div class="invalid-feedback">Passwords must match</div>
+    </div>
+
+    <!-- Buttons -->
+    <button type="submit" class="btn btn-primary me-2" [disabled]="form.invalid">Register</button>
+    <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+  </form>
+</div>

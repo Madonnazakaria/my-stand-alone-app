@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-about-us',
+  standalone: true,
+  template: `
+    <div class="container">
+      <h1>About Us</h1>
+      <div class="card">
+        <p>We are passionate about providing the best products for our customers. Our mission is to combine quality, affordability, and excellent customer service.</p>
+        <p>Our team works tirelessly to ensure every order is handled with care and delivered on time.</p>
+      </div>
+    </div>
+  `
+})
+export class AboutUsComponent {}

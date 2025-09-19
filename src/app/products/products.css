@@ -1,0 +1,118 @@
+.qty-state .out { color: red; font-weight: bold; }
+.qty-state .warn { color: orange; font-weight: bold; }
+.qty-state .ok { color: green; font-weight: bold; }
+h1 {
+  background-color: rgb(127, 193, 252) !important;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+/* ألوان للكميات */
+.text-danger {
+  color: #dc3545 !important;
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+.text-success {
+  color: #198754 !important;
+}
+
+.fw-bold {
+  font-weight: bold !important;
+}
+
+/* تحسين مظهر الكروت */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* تحسين مظهر المودال */
+.modal-content {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.modal-header {
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6;
+}
+
+/* تنسيق الفوتر */
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 2rem;
+}
+
+/* تنسيق حقل البحث والفئات */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-select {
+  cursor: pointer;
+}
+
+/* تنسيق الأزرار */
+.btn {
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* تنسيق البطاقات */
+.card-img-top {
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05);
+}
+/* تنسيقات لعرض معلومات البطاقة */
+.card-info {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  border-left: 4px solid #007bff;
+}
+
+.card-info p {
+  margin-bottom: 5px;
+  font-family: monospace;
+}
+
+/* تنسيقات حقل الكمية */
+input[type="number"] {
+  text-align: center;
+}
+
+/* تحسين مظهر المودال */
+.modal-body {
+  padding: 20px;
+}
+
+.modal-content {
+  border-radius: 10px;
+}

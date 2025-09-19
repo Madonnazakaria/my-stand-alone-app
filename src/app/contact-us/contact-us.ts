@@ -1,0 +1,21 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-contact-us',
+  standalone: true,
+  template: `
+    <div class="container">
+      <h1>Contact Us</h1>
+      <div class="card">
+        <p>If you have any questions, feel free to reach out to us using the form below:</p>
+        <form>
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Your Email" required>
+          <textarea placeholder="Your Message" rows="5" required></textarea>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+    </div>
+  `
+})
+export class ContactUsComponent {}

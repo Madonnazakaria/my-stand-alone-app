@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-4 mb-3" *ngFor="let product of products">
+    <div class="card h-100 shadow-sm">
+      <img [src]="product.img" class="card-img-top" alt="{{product.name}}">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">{{ product.description }}</p>
+        <button class="btn btn-primary" (click)="selectProduct(product)">Show Details</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-product-details *ngIf="selectedProduct" [product]="selectedProduct" (close)="closeDetails()"></app-product-details>
+

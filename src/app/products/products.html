@@ -1,0 +1,110 @@
+
+  <h1 class="p-3 mb-4 rounded text-center bg-primary text-white">Product Store</h1>
+
+  <!-- Cart button -->
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-outline-primary position-relative" (click)="buyNow()">
+      🛒 Cart
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        {{ cartItemCount }}
+      </span>
+    </button>
+  </div>
+   <!-- date pipe -->
+  <p class="text-muted">
+    Today: {{ today | date:'fullDate' }}
+  </p>
+  <!-- Search -->
+  <div class="form-group mb-3">
+    <input type="text" class="form-control" placeholder="Search products..." [value]="searchTerm()" (input)="onSearchChange($any($event.target).value)">
+  </div>
+
+  <!-- Category filter -->
+  <div class="form-group mb-3">
+    <select class="form-select" [value]="selectedCategoryId()" (change)="onCategoryChange($any($event.target).value)">
+      <option *ngFor="let c of categories()" [value]="c.id">{{c.name}}</option>
+    </select>
+  </div>
+
+  <!-- Products grid -->
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let product of filteredProducts()">
+      <div class="card h-100 shadow-sm" appProductCard>
+        <img [src]="product.img" class="card-img-top object-fit-cover" alt="{{product.name}}" style="height:250px;" (error)="handleImageError($event)">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">Price: {{ product.price | currency:'USD':'symbol':'1.2-2' }}</p>
+          <p class="card-text">
+  Added on: {{ product.dateAdded | date:'mediumDate' }}
+</p>
+          <p class="card-text">
+            Quantity: <span [ngClass]="getQuantityClass(product)">
+              <ng-container [ngSwitch]="product.quantity">
+                <span *ngSwitchCase="0">Out of stock</span>
+                <span *ngSwitchCase="1">Last 1 item</span>
+                <span *ngSwitchCase="2">Last 2 items</span>
+                <span *ngSwitchDefault>In stock</span>
+              </ng-container> ({{ product.quantity }})
+            </span>
+          </p>
+          <div class="d-flex gap-2 mt-auto">
+            <button class="btn btn-primary flex-fill" (click)="addToCart(product)" [disabled]="product.quantity===0">Add to Cart</button>
+            <button class="btn btn-outline-secondary flex-fill" (click)="showDetails(product)">Show Details</button>
+            <button class="btn btn-success flex-fill" (click)="buyNow(product)" [disabled]="product.quantity===0">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Details -->
+  @if(showDetailsModal() && selectedProduct()) {
+    <div class="row mt-4">
+      <div class="col-12">
+        <app-product-details
+          *ngIf="selectedProduct()"
+          [product]="selectedProduct()"
+          (close)="closeDetails()">
+        </app-product-details>
+      </div>
+    </div>
+  }
+
+  <!-- Buy Now / Cart Modal -->
+  @if(showBuyNowModal()) {
+    <div class="modal d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+      <div class="modal-dialog">
+        <div class="modal-content p-3">
+           <!-- عنوان المودال + زرار إغلاق -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <button type="button" class="btn-close" (click)="closeBuyNow()"></button>
+        </div>
+          <h5 class="modal-title mb-3">Your Cart</h5>
+          <div *ngIf="cartItems().length > 0; else emptyCart">
+            <div *ngFor="let item of cartItems()" class="d-flex align-items-center mb-2">
+              <img [src]="item.img" style="width:50px;height:50px;object-fit:cover;" class="me-2">
+              <span class="flex-fill">{{ item.name }}</span>
+              <span class="me-2">Qty: {{ item.cartQuantity }}</span>
+              <span class="me-2">Price: {{ item.price | currency:'USD':'symbol' }}</span>
+              <button class="btn btn-sm btn-danger" (click)="removeFromCart(item)">Remove</button>
+            </div>
+            <p class="mt-2">Total Items: {{ cartItemCount }}, Total Price: {{ getTotalPrice() | currency:'USD':'symbol' }}</p>
+            <input type="text" class="form-control mb-2" placeholder="Enter 16-digit card" [value]="creditCardNumber()" appCreditCardFormat (input)="formatCardNumber($any($event.target).value)">
+            <div class="d-flex justify-content-end gap-2">
+              <button class="btn btn-secondary" (click)="closeBuyNow()">Cancel</button>
+              <button class="btn btn-success" (click)="placeOrder()">Confirm</button>
+            </div>
+            <p class="text-danger mt-2">{{ orderMessage() }}</p>
+          </div>
+
+          <ng-template #emptyCart>
+            <p>Your cart is empty.</p>
+
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  }
+  <!-- Footer -->
+  <app-footer></app-footer>
+
