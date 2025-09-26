@@ -1,0 +1,10 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
+  <a routerLink="/products" class="nav-link">Products</a>
+
+  @if (!auth.isLoggedIn()) {
+    <a routerLink="/login" class="nav-link">Login</a>
+    <a routerLink="/register" class="nav-link">Register</a>
+  } @else {
+    <button class="btn btn-danger ms-auto" (click)="auth.logout()">Logout</button>
+  }
+</nav>

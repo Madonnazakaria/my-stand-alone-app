@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,30 +13,31 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 export class LoginComponent {
   loginForm: FormGroup;
   submitted = false;
-  loggedUser: any = null;
-showPassword: boolean = false;
+  showPassword = false;
 
-  togglePassword() {
-    this.showPassword = !this.showPassword;
-  }
-
-  
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      username: ['', Validators.required], // fakestore expects username
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-
-  get f() { return this.loginForm.controls; }
+  togglePassword() { this.showPassword = !this.showPassword; }
 
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.invalid) return;
-    this.loggedUser = this.loginForm.value;
-    this.loginForm.reset();
-    this.submitted = false;
+
+    const creds = this.loginForm.value;
+    this.auth.login(creds).subscribe({
+      next: () => {
+        this.router.navigate(['/products']);
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Login failed');
+      }
+    });
   }
 
   resetForm() {

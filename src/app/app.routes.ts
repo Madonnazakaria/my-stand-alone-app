@@ -7,6 +7,7 @@ import { ProductDetails } from './product-details/product-details';
 import { NotFoundComponent } from './not-found/not-found';
 import { RegisterComponent } from './register/register';
 import { LoginComponent } from './login/login';
+import { GuestGuard } from './guards/guest.guard';
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -15,10 +16,9 @@ export const appRoutes: Routes = [
   { path: 'contact-us', component: ContactUsComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'products/:id', component: ProductDetails },
-    { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
-
-  { path: '**', component: NotFoundComponent }
-  ];
-
+  { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
+  { path: 'search-products', loadComponent: () => import('./search-products/search-products').then(m => m.SearchProductsComponent) },
+  { path: '**', component: NotFoundComponent },
+];
 

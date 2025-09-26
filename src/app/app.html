@@ -14,19 +14,25 @@
   <app-clock *ngIf="showClock"></app-clock>
 </header>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
-  <a routerLink="/home" routerLinkActive="active" class="nav-link">Home</a>
-  <a routerLink="/about" routerLinkActive="active" class="nav-link">About Us</a>
-  <a routerLink="/contact" routerLinkActive="active" class="nav-link">Contact Us</a>
-  <a routerLink="/products" routerLinkActive="active" class="nav-link">Products</a>
-   <a routerLink="/register" routerLinkActive="active" class="nav-link">Register</a>
-  <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">My Store</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/about">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/contact">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/products">Products</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/search">Search</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
-<div class="top-bar">
-  <app-clock></app-clock>
-</div>
 
-<!-- هنا ستظهر كل الComponents اللي ننتقل لها -->
+
 <router-outlet></router-outlet>
 
 
